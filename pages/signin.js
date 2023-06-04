@@ -3,6 +3,7 @@ import { useAccount, useConnect, useSignMessage, useDisconnect } from "wagmi";
 import { useAuthRequestChallengeEvm } from "@moralisweb3/next";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/router";
+import Image from 'next/image'
 
 function SignIn() {
   const { connectAsync } = useConnect();
@@ -43,9 +44,21 @@ function SignIn() {
   };
 
   return (
-    <div>
-      <h3>Web3 Authentication</h3>
-      <button onClick={handleAuth}>Authenticate via Metamask</button>
+    
+    <div className="flex flex-col items-center justify-center min-h-screen bg-center bg-cover" style={{ backgroundImage: 'url("/loginbackground.png")' }}>
+        <Image
+          src="/logo.png"
+          alt="VeriCred Logo"
+          width={125}
+          height={125}
+          priority
+        />
+      <button
+        onClick={handleAuth}
+        className="mt-10 px-10 py-1 bg-gray-300 rounded-lg"
+      >
+        Log in with MetaMask
+      </button>
     </div>
   );
 }
