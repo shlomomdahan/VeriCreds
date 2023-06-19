@@ -3,21 +3,22 @@ import Image from 'next/image'
 import { Inter } from 'next/font/google'
 import styles from '@/styles/Home.module.css'
 import { useEvmNativeBalance } from '@moralisweb3/next';
-import Sidebar from '../components/Sidebar';
-import Topbar from '../components/Topbar';
-import AllCollections from '../components/AllCollections';
+import Sidebar from '../../components/Sidebar';
+import Topbar from '../../components/Topbar';
+import AllCollections from '../../components/AllCollections';
+import { getSession } from "next-auth/react";
 
 const inter = Inter({ subsets: ['latin'] })
 
-export default function Home() {
+function Home({ user }) {
   const address = process.env.NEXT_PUBLIC_WALLET_ADDRESS;
   const { data: nativeBalance } = useEvmNativeBalance({ address });
 
   return (
     <>
       <Head>
-        <title>VeriCred</title>
-        <meta name="description" content="VeriCred app" />
+        <title>VeriCreds</title>
+        <meta name="description" content="VeriCreds app" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -36,10 +37,33 @@ export default function Home() {
           <Sidebar />
         </div>
         <div className="content flex-grow bg-white">
-          <AllCollections />
+          <AllCollections
+            user={user}
+          />
         </div>
       </div>
     </div>
     </>
-  )
+  );
 }
+
+export async function getServerSideProps(context) {
+  const session = await getSession(context);
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: '/signin',
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {
+      user: session.user
+    }
+  }
+}
+
+export default Home;
