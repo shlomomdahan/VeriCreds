@@ -47,7 +47,7 @@ function Home({ user }) {
   );
 }
 
-export async function getServerSideProps(context) {
+export const getServerSideProps = async (context) => {
   const session = await getSession(context);
 
   if (!session) {
