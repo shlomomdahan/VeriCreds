@@ -29,7 +29,7 @@ const AllCollections = (props) => {
   return (
     <div className="allcollections p-12">
       <button
-        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
         onClick={() => signOut({ redirect: "/signin" })}>Sign out</button>
       {/*<h4>User session:</h4>*/}
       {/*<pre>{JSON.stringify(props.user, null, 2)}</pre>*/}
