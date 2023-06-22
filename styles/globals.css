@@ -6,3 +6,10 @@
     padding: 0;
     margin: 0;
 }
+
+.active {
+    /*/@apply bg-white text-blue-400 rounded-full;*/
+    background: white; 
+    border-radius: 9999px; 
+    color: #63b3ed;
+}
