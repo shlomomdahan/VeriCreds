@@ -3,6 +3,13 @@ import {useState} from "react";
 const TableList = (props) => {
 
     const [showDropdown, setShowDropdown] = useState(false);
+    const [searchTerm, setSearchTerm] = useState('');
+    const filteredCollection = props.collection.filter(document =>
+        document.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        document.format.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
+    const handleSearchChange = event => setSearchTerm(event.target.value);
 
     return (
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -27,7 +34,7 @@ const TableList = (props) => {
                          className={`absolute z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600 ${showDropdown ? '' : 'hidden'}`}>
                         <ul className="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownActionButton">
                             <li>
-                                <a href="#"
+                                <a href="@/components/AllDocuments/TableList#"
                                    className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                                    onClick={(e) => {e.stopPropagation()}}
                                 >
@@ -35,7 +42,7 @@ const TableList = (props) => {
                                 </a>
                             </li>
                             <li>
-                                <a href="#"
+                                <a href="@/components/AllDocuments/TableList#"
                                    className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                                    onClick={(e) => {e.stopPropagation()}}
                                 >
@@ -43,7 +50,7 @@ const TableList = (props) => {
                                 </a>
                             </li>
                             <li>
-                                <a href="#"
+                                <a href="@/components/AllDocuments/TableList#"
                                    className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                                    onClick={(e) => {e.stopPropagation()}}
                                 >
@@ -52,7 +59,7 @@ const TableList = (props) => {
                             </li>
                         </ul>
                         <div className="py-1">
-                            <a href="#"
+                            <a href="@/components/AllDocuments/TableList#"
                                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Delete
                                 User</a>
                         </div>
@@ -70,7 +77,9 @@ const TableList = (props) => {
                     </div>
                     <input type="text" id="table-search-users"
                            className="block p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                           placeholder="Search for documents" />
+                           placeholder="Search for documents"
+                           value={searchTerm}
+                           onChange={handleSearchChange} />
                 </div>
             </div>
             <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
@@ -98,7 +107,7 @@ const TableList = (props) => {
                 </tr>
                 </thead>
                 <tbody>
-                {props.collection.map((document) => (
+                {filteredCollection.map((document) => (
                     <tr key={document.name} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                         <td className="w-4 p-4">
                             <div className="flex items-center">
@@ -108,7 +117,7 @@ const TableList = (props) => {
                             </div>
                         </td>
                         <th scope="row" className="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
-                            <img className="w-20 h-20" src={document.image}
+                            <img className="w-24 h-20 rounded-lg" src={document.image}
                                  alt="Jese image" />
                             <div className="pl-3">
                                 <div className="text-base font-semibold">{document.name}</div>
@@ -125,7 +134,7 @@ const TableList = (props) => {
                             </div>
                         </td>
                         <td className="px-6 py-4">
-                            <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Share</a>
+                            <a href="@/components/AllDocuments/TableList#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Share</a>
                         </td>
                     </tr>
                 ))}

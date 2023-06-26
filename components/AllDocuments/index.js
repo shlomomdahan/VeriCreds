@@ -2,9 +2,10 @@ import React, {useState} from 'react';
 import {signOut} from "next-auth/react";
 
 // project imports
-import TableList from "@/components/TableList";
+import TableList from "@/components/AllDocuments/TableList";
+import TableGrid from "@/components/AllDocuments/TableGrid";
 
-const AllDocuments = (props) => {
+const Index = (props) => {
 
   console.log(props.user);
 
@@ -13,20 +14,74 @@ const AllDocuments = (props) => {
       name: 'document1.pdf',
       format: 'PDF',
       image:
-        'https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+        'https://flowbite.s3.amazonaws.com/docs/gallery/square/image.jpg',
     },
     {
       name: 'document2.pdf',
       format: 'PDF',
       image:
-        'https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+        'https://flowbite.s3.amazonaws.com/docs/gallery/square/image-1.jpg',
     },
     {
       name: 'document3.png',
       format: 'PNG',
       image:
-        'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+          'https://flowbite.s3.amazonaws.com/docs/gallery/square/image-2.jpg',
     },
+    {
+      name: 'document4.pdf',
+      format: 'PDF',
+      image:
+        'https://flowbite.s3.amazonaws.com/docs/gallery/square/image-3.jpg'
+    },
+    {
+      name: 'document5.pdf',
+      format: 'PDF',
+      image:
+          'https://flowbite.s3.amazonaws.com/docs/gallery/square/image-4.jpg'
+    },
+    {
+      name: 'document6.pdf',
+      format: 'PDF',
+      image:
+          'https://flowbite.s3.amazonaws.com/docs/gallery/square/image-5.jpg'
+    },
+    {
+      name: 'document7.pdf',
+      format: 'PDF',
+      image:
+          'https://flowbite.s3.amazonaws.com/docs/gallery/square/image-6.jpg'
+    },
+    {
+      name: 'document8.pdf',
+      format: 'PDF',
+      image:
+          'https://flowbite.s3.amazonaws.com/docs/gallery/square/image-7.jpg'
+    },
+    {
+      name: 'document9.jpg',
+      format: 'JPEG',
+      image:
+          'https://flowbite.s3.amazonaws.com/docs/gallery/square/image-8.jpg'
+    },
+    {
+      name: 'document10.pdf',
+      format: 'PDF',
+      image:
+          'https://flowbite.s3.amazonaws.com/docs/gallery/square/image-9.jpg'
+    },
+    {
+      name: 'Recommendation',
+      format: 'PNG',
+      image:
+          'https://flowbite.s3.amazonaws.com/docs/gallery/square/image-10.jpg'
+    },
+    {
+      name: 'Transcript',
+      format: 'PDF',
+      image:
+          'https://flowbite.s3.amazonaws.com/docs/gallery/square/image-11.jpg'
+    }
   ]
 
   // Set state variable for showing grid view
@@ -88,19 +143,23 @@ const AllDocuments = (props) => {
         />
       </>
       }
-      {viewMode === "grid" && <ul className="grid grid-cols-4 gap-4">
-        {collection.map((document) => (
-          <li key={document.name} className="py-4 flex flex-col items-center hover:bg-gray-100">
-            <img className="h-40 w-40" src={document.image} alt="" />
-            <div className="ml-2">
-              <p className="text-sm font-medium text-gray-900">{document.name}</p>
-              <p className="text-sm text-gray-500">{document.format}</p>
-            </div>
-          </li>
-        ))}
-      </ul>}
+      {viewMode === "grid" && <>
+      {/*<ul className="grid grid-cols-4 gap-4">*/}
+      {/*  {collection.map((document) => (*/}
+      {/*    <li key={document.name} className="py-4 flex flex-col items-center hover:bg-gray-100">*/}
+      {/*      <img className="h-40 w-40" src={document.image} alt="" />*/}
+      {/*      <div className="ml-2">*/}
+      {/*        <p className="text-sm font-medium text-gray-900">{document.name}</p>*/}
+      {/*        <p className="text-sm text-gray-500">{document.format}</p>*/}
+      {/*      </div>*/}
+      {/*    </li>*/}
+      {/*  ))}*/}
+      {/*</ul>*/}
+      <TableGrid />
+      </>
+      }
     </div>
   );
 }
 
-export default AllDocuments;
+export default Index;
