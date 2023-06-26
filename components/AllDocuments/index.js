@@ -5,7 +5,7 @@ import {signOut} from "next-auth/react";
 import TableList from "@/components/AllDocuments/TableList";
 import TableGrid from "@/components/AllDocuments/TableGrid";
 
-const Index = (props) => {
+const AllDocuments = (props) => {
 
   console.log(props.user);
 
@@ -162,4 +162,4 @@ const Index = (props) => {
   );
 }
 
-export default Index;
+export default AllDocuments;
