@@ -11,76 +11,100 @@ const AllDocuments = (props) => {
 
   const collection = [
     {
-      name: 'document1.pdf',
+      name: 'document1',
       format: 'PDF',
       image:
         'https://flowbite.s3.amazonaws.com/docs/gallery/square/image.jpg',
+      status: "verified",
+      category: "Identification"
     },
     {
-      name: 'document2.pdf',
+      name: 'document2',
       format: 'PDF',
       image:
         'https://flowbite.s3.amazonaws.com/docs/gallery/square/image-1.jpg',
+      status: "minted",
+      category: "Reference Letters"
     },
     {
-      name: 'document3.png',
+      name: 'document3',
       format: 'PNG',
       image:
           'https://flowbite.s3.amazonaws.com/docs/gallery/square/image-2.jpg',
+      status: "shared",
+      category: "Certificates"
     },
     {
-      name: 'document4.pdf',
+      name: 'document4',
       format: 'PDF',
       image:
-        'https://flowbite.s3.amazonaws.com/docs/gallery/square/image-3.jpg'
+        'https://flowbite.s3.amazonaws.com/docs/gallery/square/image-3.jpg',
+      status: "minted",
+      category: "Reference Letters"
     },
     {
-      name: 'document5.pdf',
+      name: 'document5',
       format: 'PDF',
       image:
-          'https://flowbite.s3.amazonaws.com/docs/gallery/square/image-4.jpg'
+          'https://flowbite.s3.amazonaws.com/docs/gallery/square/image-4.jpg',
+      status: "shared",
+      category: "Identification"
     },
     {
-      name: 'document6.pdf',
+      name: 'document6',
       format: 'PDF',
       image:
-          'https://flowbite.s3.amazonaws.com/docs/gallery/square/image-5.jpg'
+          'https://flowbite.s3.amazonaws.com/docs/gallery/square/image-5.jpg',
+      status: "verified",
+      category: "Others"
     },
     {
-      name: 'document7.pdf',
+      name: 'document7',
       format: 'PDF',
       image:
-          'https://flowbite.s3.amazonaws.com/docs/gallery/square/image-6.jpg'
+          'https://flowbite.s3.amazonaws.com/docs/gallery/square/image-6.jpg',
+      status: "minted",
+      category: "Certificates"
     },
     {
-      name: 'document8.pdf',
+      name: 'document8',
       format: 'PDF',
       image:
-          'https://flowbite.s3.amazonaws.com/docs/gallery/square/image-7.jpg'
+          'https://flowbite.s3.amazonaws.com/docs/gallery/square/image-7.jpg',
+      status: "shared",
+      category: "Transcripts"
     },
     {
       name: 'document9.jpg',
       format: 'JPEG',
       image:
-          'https://flowbite.s3.amazonaws.com/docs/gallery/square/image-8.jpg'
+          'https://flowbite.s3.amazonaws.com/docs/gallery/square/image-8.jpg',
+      status: "minted",
+      category: "Reference Letters"
     },
     {
       name: 'document10.pdf',
       format: 'PDF',
       image:
-          'https://flowbite.s3.amazonaws.com/docs/gallery/square/image-9.jpg'
+          'https://flowbite.s3.amazonaws.com/docs/gallery/square/image-9.jpg',
+      status: "shared",
+      category: "Recommendation Letters"
     },
     {
       name: 'Recommendation',
       format: 'PNG',
       image:
-          'https://flowbite.s3.amazonaws.com/docs/gallery/square/image-10.jpg'
+          'https://flowbite.s3.amazonaws.com/docs/gallery/square/image-10.jpg',
+      status: "shared",
+      category: "Diplomas"
     },
     {
       name: 'Transcript',
       format: 'PDF',
       image:
-          'https://flowbite.s3.amazonaws.com/docs/gallery/square/image-11.jpg'
+          'https://flowbite.s3.amazonaws.com/docs/gallery/square/image-11.jpg',
+      status: "minted",
+      category: "Transcripts"
     }
   ]
 
@@ -155,7 +179,9 @@ const AllDocuments = (props) => {
       {/*    </li>*/}
       {/*  ))}*/}
       {/*</ul>*/}
-      <TableGrid />
+      <TableGrid
+          collection={collection}
+      />
       </>
       }
     </div>
