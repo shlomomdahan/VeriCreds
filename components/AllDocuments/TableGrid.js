@@ -1,93 +1,53 @@
 import {useState} from "react";
 
 const TableGrid = (props) => {
+    const [searchTerm, setSearchTerm] = useState('');
+    const filteredCollection = props.collection.filter(document =>
+        document.category.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
+    const categories = [
+        "Certificates",
+        "Identification",
+        "Transcripts",
+        "Reference Letters",
+        "Recommendation Letters",
+        "Diplomas",
+        "Others",
+    ];
+
+    const CategoryButton = ({category}) => {
+        const isActive = category === searchTerm;
+        return (
+            <button type="button"
+                    className={`border border-white hover:border-gray-200 ${isActive ? "hover:text-white border-blue-600 text-blue-700 focus:ring-blue-300 hover:bg-blue-700 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800" : "text-gray-900 focus:ring-gray-300 dark:bg-gray-900 dark:focus:ring-gray-800"} bg-white focus:ring-4 focus:outline-none rounded-full text-base font-medium px-5 py-2.5 text-center mr-3 mb-3`}
+                    onClick={() => setSearchTerm(category)}
+            >
+                {category}
+            </button>
+        );
+    }
+
     return (
-        <>
-            <div class="flex items-center justify-center py-4 md:py-8 flex-wrap">
+        <div>
+            <div className="flex items-center justify-center py-4 md:py-8 flex-wrap">
                 <button type="button"
-                        className="text-blue-700 hover:text-white border border-blue-600 bg-white hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-full text-base font-medium px-5 py-2.5 text-center mr-3 mb-3 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:bg-gray-900 dark:focus:ring-blue-800">
+                        className={`border border-white hover:border-gray-200 ${searchTerm === "" ? "hover:text-white border-blue-600 text-blue-700 focus:ring-blue-300 hover:bg-blue-700 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800" : "text-gray-900 focus:ring-gray-300 dark:bg-gray-900 dark:focus:ring-gray-800"} bg-white focus:ring-4 focus:outline-none rounded-full text-base font-medium px-5 py-2.5 text-center mr-3 mb-3`}
+                        onClick={() => setSearchTerm("")}
+                >
                     All categories
                 </button>
-                <button type="button"
-                        className="text-gray-900 border border-white hover:border-gray-200 dark:border-gray-900 dark:bg-gray-900 dark:hover:border-gray-700 bg-white focus:ring-4 focus:outline-none focus:ring-gray-300 rounded-full text-base font-medium px-5 py-2.5 text-center mr-3 mb-3 dark:text-white dark:focus:ring-gray-800">
-                    Certificates
-                </button>
-                <button type="button"
-                        className="text-gray-900 border border-white hover:border-gray-200 dark:border-gray-900 dark:bg-gray-900 dark:hover:border-gray-700 bg-white focus:ring-4 focus:outline-none focus:ring-gray-300 rounded-full text-base font-medium px-5 py-2.5 text-center mr-3 mb-3 dark:text-white dark:focus:ring-gray-800">
-                    Identification
-                </button>
-                <button type="button"
-                        className="text-gray-900 border border-white hover:border-gray-200 dark:border-gray-900 dark:bg-gray-900 dark:hover:border-gray-700 bg-white focus:ring-4 focus:outline-none focus:ring-gray-300 rounded-full text-base font-medium px-5 py-2.5 text-center mr-3 mb-3 dark:text-white dark:focus:ring-gray-800">
-                    Transcripts
-                </button>
-                <button type="button"
-                        className="text-gray-900 border border-white hover:border-gray-200 dark:border-gray-900 dark:bg-gray-900 dark:hover:border-gray-700 bg-white focus:ring-4 focus:outline-none focus:ring-gray-300 rounded-full text-base font-medium px-5 py-2.5 text-center mr-3 mb-3 dark:text-white dark:focus:ring-gray-800">
-                    Reference Letters
-                </button>
-                <button type="button"
-                        className="text-gray-900 border border-white hover:border-gray-200 dark:border-gray-900 dark:bg-gray-900 dark:hover:border-gray-700 bg-white focus:ring-4 focus:outline-none focus:ring-gray-300 rounded-full text-base font-medium px-5 py-2.5 text-center mr-3 mb-3 dark:text-white dark:focus:ring-gray-800">
-                    Recommendation Letters
-                </button>
-                <button type="button"
-                        className="text-gray-900 border border-white hover:border-gray-200 dark:border-gray-900 dark:bg-gray-900 dark:hover:border-gray-700 bg-white focus:ring-4 focus:outline-none focus:ring-gray-300 rounded-full text-base font-medium px-5 py-2.5 text-center mr-3 mb-3 dark:text-white dark:focus:ring-gray-800">
-                    Diplomas
-                </button>
-                <button type="button"
-                        className="text-gray-900 border border-white hover:border-gray-200 dark:border-gray-900 dark:bg-gray-900 dark:hover:border-gray-700 bg-white focus:ring-4 focus:outline-none focus:ring-gray-300 rounded-full text-base font-medium px-5 py-2.5 text-center mr-3 mb-3 dark:text-white dark:focus:ring-gray-800">
-                    Credentials
-                </button>
+                {categories.map(category => <CategoryButton category={category} key={category}/>)}
             </div>
-            <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
-                <div>
-                    <img className="h-auto max-w-full rounded-lg"
-                         src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image.jpg" alt="" />
-                </div>
-                <div>
-                    <img className="h-auto max-w-full rounded-lg"
-                         src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-1.jpg" alt="" />
-                </div>
-                <div>
-                    <img className="h-auto max-w-full rounded-lg"
-                         src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-2.jpg" alt="" />
-                </div>
-                <div>
-                    <img className="h-auto max-w-full rounded-lg"
-                         src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-3.jpg" alt="" />
-                </div>
-                <div>
-                    <img className="h-auto max-w-full rounded-lg"
-                         src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-4.jpg" alt="" />
-                </div>
-                <div>
-                    <img className="h-auto max-w-full rounded-lg"
-                         src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-5.jpg" alt="" />
-                </div>
-                <div>
-                    <img className="h-auto max-w-full rounded-lg"
-                         src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-6.jpg" alt="" />
-                </div>
-                <div>
-                    <img className="h-auto max-w-full rounded-lg"
-                         src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-7.jpg" alt="" />
-                </div>
-                <div>
-                    <img className="h-auto max-w-full rounded-lg"
-                         src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-8.jpg" alt="" />
-                </div>
-                <div>
-                    <img className="h-auto max-w-full rounded-lg"
-                         src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-9.jpg" alt="" />
-                </div>
-                <div>
-                    <img className="h-auto max-w-full rounded-lg"
-                         src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-10.jpg" alt="" />
-                </div>
-                <div>
-                    <img className="h-auto max-w-full rounded-lg"
-                         src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-11.jpg" alt="" />
-                </div>
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                {filteredCollection.map((document) => (
+                    <div key={document.name}>
+                        <img className="h-auto max-w-full rounded-lg"
+                             src={document.image} alt="" />
+                    </div>
+                ))}
             </div>
-        </>
+        </div>
     );
 }
 

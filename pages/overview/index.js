@@ -33,7 +33,7 @@ function Home({ user }) {
         <Topbar />
       </div>
       <div className="flex flex-grow">
-        <div className="sidebar w-64 bg-gray-100">
+        <div className="sidebar w-64 bg-gray-100 flex-shrink-0">
           <Sidebar />
         </div>
         <div className="content flex-grow bg-white">

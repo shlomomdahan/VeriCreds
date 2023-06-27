@@ -11,76 +11,100 @@ const AllDocuments = (props) => {
 
   const collection = [
     {
-      name: 'document1.pdf',
+      name: 'document1',
       format: 'PDF',
       image:
         'https://flowbite.s3.amazonaws.com/docs/gallery/square/image.jpg',
+      status: "verified",
+      category: "Identification"
     },
     {
-      name: 'document2.pdf',
+      name: 'document2',
       format: 'PDF',
       image:
         'https://flowbite.s3.amazonaws.com/docs/gallery/square/image-1.jpg',
+      status: "minted",
+      category: "Reference Letters"
     },
     {
-      name: 'document3.png',
+      name: 'document3',
       format: 'PNG',
       image:
           'https://flowbite.s3.amazonaws.com/docs/gallery/square/image-2.jpg',
+      status: "shared",
+      category: "Certificates"
     },
     {
-      name: 'document4.pdf',
+      name: 'document4',
       format: 'PDF',
       image:
-        'https://flowbite.s3.amazonaws.com/docs/gallery/square/image-3.jpg'
+        'https://flowbite.s3.amazonaws.com/docs/gallery/square/image-3.jpg',
+      status: "minted",
+      category: "Reference Letters"
     },
     {
-      name: 'document5.pdf',
+      name: 'document5',
       format: 'PDF',
       image:
-          'https://flowbite.s3.amazonaws.com/docs/gallery/square/image-4.jpg'
+          'https://flowbite.s3.amazonaws.com/docs/gallery/square/image-4.jpg',
+      status: "shared",
+      category: "Identification"
     },
     {
-      name: 'document6.pdf',
+      name: 'document6',
       format: 'PDF',
       image:
-          'https://flowbite.s3.amazonaws.com/docs/gallery/square/image-5.jpg'
+          'https://flowbite.s3.amazonaws.com/docs/gallery/square/image-5.jpg',
+      status: "verified",
+      category: "Others"
     },
     {
-      name: 'document7.pdf',
+      name: 'document7',
       format: 'PDF',
       image:
-          'https://flowbite.s3.amazonaws.com/docs/gallery/square/image-6.jpg'
+          'https://flowbite.s3.amazonaws.com/docs/gallery/square/image-6.jpg',
+      status: "minted",
+      category: "Certificates"
     },
     {
-      name: 'document8.pdf',
+      name: 'document8',
       format: 'PDF',
       image:
-          'https://flowbite.s3.amazonaws.com/docs/gallery/square/image-7.jpg'
+          'https://flowbite.s3.amazonaws.com/docs/gallery/square/image-7.jpg',
+      status: "shared",
+      category: "Transcripts"
     },
     {
       name: 'document9.jpg',
       format: 'JPEG',
       image:
-          'https://flowbite.s3.amazonaws.com/docs/gallery/square/image-8.jpg'
+          'https://flowbite.s3.amazonaws.com/docs/gallery/square/image-8.jpg',
+      status: "minted",
+      category: "Reference Letters"
     },
     {
       name: 'document10.pdf',
       format: 'PDF',
       image:
-          'https://flowbite.s3.amazonaws.com/docs/gallery/square/image-9.jpg'
+          'https://flowbite.s3.amazonaws.com/docs/gallery/square/image-9.jpg',
+      status: "shared",
+      category: "Recommendation Letters"
     },
     {
       name: 'Recommendation',
       format: 'PNG',
       image:
-          'https://flowbite.s3.amazonaws.com/docs/gallery/square/image-10.jpg'
+          'https://flowbite.s3.amazonaws.com/docs/gallery/square/image-10.jpg',
+      status: "shared",
+      category: "Diplomas"
     },
     {
       name: 'Transcript',
       format: 'PDF',
       image:
-          'https://flowbite.s3.amazonaws.com/docs/gallery/square/image-11.jpg'
+          'https://flowbite.s3.amazonaws.com/docs/gallery/square/image-11.jpg',
+      status: "minted",
+      category: "Transcripts"
     }
   ]
 
@@ -109,13 +133,13 @@ const AllDocuments = (props) => {
             </button>
           </div>
           <div className="bg-gray-200 text-sm text-gray-500 leading-none border-2 border-gray-200 rounded-full inline-flex">
-            <button className={`inline-flex items-center transition-colors duration-300 ease-in focus:outline-none hover:text-blue-400 focus:text-blue-400 rounded-l-full px-4 py-2 ${viewMode === 'grid' ? 'active' : ''}`} onClick={() => setViewMode('grid')} id="grid">
-             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="fill-current w-4 h-4 mr-2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
-             <span>Grid</span>
-            </button>
             <button className={`inline-flex items-center transition-colors duration-300 ease-in focus:outline-none hover:text-blue-400 focus:text-blue-400 rounded-r-full px-4 py-2 ${viewMode === 'list' ? 'active' : ''}`} onClick={() => setViewMode('list')} id="list">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="fill-current w-4 h-4 mr-2"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
               <span>List</span>
+            </button>
+            <button className={`inline-flex items-center transition-colors duration-300 ease-in focus:outline-none hover:text-blue-400 focus:text-blue-400 rounded-l-full px-4 py-2 ${viewMode === 'grid' ? 'active' : ''}`} onClick={() => setViewMode('grid')} id="grid">
+             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="fill-current w-4 h-4 mr-2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+             <span>Grid</span>
             </button>
           </div>
         </div>
@@ -155,7 +179,9 @@ const AllDocuments = (props) => {
       {/*    </li>*/}
       {/*  ))}*/}
       {/*</ul>*/}
-      <TableGrid />
+      <TableGrid
+          collection={collection}
+      />
       </>
       }
     </div>

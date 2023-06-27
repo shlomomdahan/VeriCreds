@@ -129,8 +129,9 @@ const TableList = (props) => {
                         </td>
                         <td className="px-6 py-4">
                             <div className="flex items-center">
-                                <div className="h-2.5 w-2.5 rounded-full bg-green-500 mr-2"></div>
-                                Available
+                                <div className={`h-2.5 w-2.5 rounded-full ${document.status === "minted" ? "bg-blue-700" : document.status === "verified" ? "bg-green-500" : "bg-yellow-300"} mr-2`}></div>
+
+                                {document.status !== "" ? document.status.charAt(0).toUpperCase() + document.status.slice(1) : ""}
                             </div>
                         </td>
                         <td className="px-6 py-4">
