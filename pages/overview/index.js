@@ -5,7 +5,7 @@ import styles from '@/styles/Home.module.css'
 import { useEvmNativeBalance } from '@moralisweb3/next';
 import Sidebar from '../../components/Sidebar';
 import Topbar from '../../components/Topbar';
-import AllDocuments from '../../components/AllDocuments';
+import Index from '../../components/AllDocuments';
 import { getSession } from "next-auth/react";
 
 const inter = Inter({ subsets: ['latin'] })
@@ -33,11 +33,11 @@ function Home({ user }) {
         <Topbar />
       </div>
       <div className="flex flex-grow">
-        <div className="sidebar w-64 bg-gray-100">
+        <div className="sidebar w-64 bg-gray-100 flex-shrink-0">
           <Sidebar />
         </div>
         <div className="content flex-grow bg-white">
-          <AllDocuments
+          <Index
             user={user}
           />
         </div>
