@@ -3,7 +3,6 @@ import { createConfig, configureChains, WagmiConfig } from "wagmi";
 import { publicProvider } from "wagmi/providers/public";
 import { SessionProvider } from "next-auth/react";
 import { mainnet } from "wagmi/chains";
-import AppProvider from "@/context/AppContext";
 
 const { provider, webSocketProvider } = configureChains(
   [mainnet],
