@@ -1,7 +1,11 @@
 import React from 'react';
+
 const TopBar = () => {
     return (
-        <div style={{ backgroundColor: '#274C77' }} className="topbar bg-blue-900 flex items-center justify-between h-12">
+        <div style={{
+            backgroundColor: '#274C77',
+            zIndex: 9999, // Set a high z-index value to ensure it appears on top
+        }} className="topbar bg-blue-900 flex items-center justify-between h-12">
         <div className="logo-container">
           <img src="/topbar-logo.png" alt="Logo" className="w-10 h-10 mt-1 ml-4" />
         </div>
@@ -14,5 +18,6 @@ const TopBar = () => {
         </div>
       </div>
     );
-  }
-  export default TopBar;  
+}
+
+export default TopBar;
