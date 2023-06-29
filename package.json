@@ -12,6 +12,7 @@
     "@headlessui/react": "^1.7.14",
     "@heroicons/react": "^2.0.18",
     "@moralisweb3/next": "^2.21.0",
+    "@reduxjs/toolkit": "^1.9.5",
     "@vercel/examples-ui": "^1.0.5",
     "@web3-onboard/core": "^2.19.1",
     "@web3-onboard/web3auth": "^2.2.3",
@@ -32,6 +33,7 @@
     "react-dropzone": "^14.2.3",
     "react-lottie-player": "^1.5.4",
     "react-popper-tooltip": "^4.4.2",
+    "react-redux": "^8.1.1",
     "viem": "^0.3.31",
     "wagmi": "^1.0.5"
   },
