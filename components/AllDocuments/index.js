@@ -75,7 +75,7 @@ const AllDocuments = (props) => {
       category: "Transcripts"
     },
     {
-      name: 'document9.jpg',
+      name: 'document9',
       format: 'JPEG',
       image:
           'https://flowbite.s3.amazonaws.com/docs/gallery/square/image-8.jpg',
@@ -83,7 +83,7 @@ const AllDocuments = (props) => {
       category: "Reference Letters"
     },
     {
-      name: 'document10.pdf',
+      name: 'document10',
       format: 'PDF',
       image:
           'https://flowbite.s3.amazonaws.com/docs/gallery/square/image-9.jpg',

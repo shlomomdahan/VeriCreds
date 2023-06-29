@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 const Sidebar = () => {
     return (
-      <div style={{ backgroundColor: '#8B8C89' }} className="sidebar min-h-screen p-4">
+      <div style={{ backgroundColor: '#8B8C89' }} className="sidebar min-h-screen p-4 h-full">
         <div className="logo-part flex flex-col items-center mt-5">
           <a href="/" className="text-white text-lg mb-5">Vericreds</a>
           <a href="/">

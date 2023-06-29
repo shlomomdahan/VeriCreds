@@ -29,7 +29,7 @@ function Home({ user }) {
       </div> */}
       
       <div className="flex flex-col h-screen">
-      <div className="topbar bg-gray-200 sticky top-0">
+      <div className="topbar bg-gray-200 top-0">
         <Topbar />
       </div>
       <div className="flex flex-grow">
