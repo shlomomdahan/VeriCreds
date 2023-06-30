@@ -7,7 +7,7 @@ export const nftSlice = createSlice({
         value: {}
     },
     reducers: {
-        setNft: (state, action) => {
+        nftAttributes: (state, action) => {
             state.value = action.payload;
         },
         clearNft: state => {
@@ -24,6 +24,6 @@ export const nftSlice = createSlice({
     },
 });
 
-export const { getNft, setNft, clearNft } = nftSlice.actions
+export const { nftAttributes, clearNft } = nftSlice.actions
 
 export default nftSlice.reducer;

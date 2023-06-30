@@ -14,3 +14,13 @@
     border-radius: 9999px; 
     color: #63b3ed;
 }
+
+.filter-brightness {
+    filter: brightness(100%);
+    transition: filter 0.3s ease;
+}
+
+.brightness-transition .filter-brightness {
+    filter: brightness(80%);
+    opacity: 0.5;
+}

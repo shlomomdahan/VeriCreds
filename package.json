@@ -23,6 +23,7 @@
     "ethers": "^5.7.2",
     "flowbite": "^1.6.6",
     "flowbite-react": "^0.4.9",
+    "framer-motion": "^10.12.18",
     "magic-sdk": "^17.1.6",
     "moralis": "^2.21.0",
     "next": "^13.4.2",
