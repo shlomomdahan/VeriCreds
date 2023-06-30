@@ -98,7 +98,7 @@ const TableGrid = (props) => {
                     <CategoryButton category={category} key={category} />
                 ))}
             </div>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-x-4 md:gap-y-2">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-3.5 md:gap-x-3.5 md:gap-y-7">
                 {filteredCollection.map((document, index) => (
                     <div
                         onClick={() => handleDocumentClick(event, index)}
@@ -137,7 +137,7 @@ const TableGrid = (props) => {
                                         <div className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium ${document.status === "minted" ? "bg-blue-700 text-white" : document.status === "verified" ? "bg-green-500 text-white" : "bg-yellow-300 text-gray-800"} mr-2`}>
                                             {document.status}
                                         </div>
-                                        <a href={document.shareLink} target="_blank" rel="noopener noreferrer" className="mt-4 text-blue-500 hover:underline">
+                                        <a href={"#"} target="_blank" rel="noopener noreferrer" className="mt-4 text-blue-500 hover:underline">
                                             Share
                                         </a>
                                     </div>
