@@ -98,7 +98,7 @@ const TableGrid = (props) => {
                     <CategoryButton category={category} key={category} />
                 ))}
             </div>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-5">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-x-4 gap-y-4">
             {filteredCollection.map((document, index) => (
                     <div
                         onClick={() => handleDocumentClick(event, index)}
@@ -116,7 +116,7 @@ const TableGrid = (props) => {
                                     className={`absolute inset-0 flex items-center justify-center ${isAnyCardFlipped ? "brightness-transition" : ""}`}
                                 >
                                     <img
-                                        className="h-auto max-w-full rounded-lg filter-brightness"
+                                        className="object-cover w-full h-full rounded-lg filter-brightness"
                                         src={document.image}
                                         alt=""
                                     />
