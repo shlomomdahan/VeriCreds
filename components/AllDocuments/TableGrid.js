@@ -98,7 +98,7 @@ const TableGrid = (props) => {
                     <CategoryButton category={category} key={category} />
                 ))}
             </div>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-8 md:gap-x-8 md:gap-y-10">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-5 md:gap-x-5 md:gap-y-5">
                 {filteredCollection.map((document, index) => (
                     <div
                         onClick={() => handleDocumentClick(event, index)}
