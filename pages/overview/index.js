@@ -29,20 +29,20 @@ function Home({ user }) {
       </div> */}
       
       <div className="flex flex-col h-screen">
-      <div className="topbar bg-gray-200 top-0">
-        <Topbar />
-      </div>
-      <div className="flex flex-grow">
-        <div className="sidebar w-64 bg-gray-100 flex-shrink-0">
-          <Sidebar />
+        <div className="topbar bg-gray-200 top-0">
+          <Topbar />
         </div>
-        <div className="content flex-grow bg-white">
-          <Index
-            user={user}
-          />
+        <div className="flex flex-grow">
+          <div className="sidebar w-64 bg-gray-100 flex-shrink-0">
+            <Sidebar />
+          </div>
+          <div className="content flex-grow bg-white">
+            <Index
+              user={user}
+            />
+          </div>
         </div>
       </div>
-    </div>
     </>
   );
 }

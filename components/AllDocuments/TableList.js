@@ -1,12 +1,17 @@
 import {useState} from "react";
+import { useDispatch } from 'react-redux';
+import {setNftAttributes} from "@/features/nft/nftSlice";
+import Link from "next/link";
 
 const TableList = (props) => {
+    const dispatch = useDispatch();
 
     const [showDropdown, setShowDropdown] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
     const filteredCollection = props.collection.filter(document =>
         document.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        document.format.toLowerCase().includes(searchTerm.toLowerCase())
+        document.format.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        document.category.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
     const handleSearchChange = event => setSearchTerm(event.target.value);
@@ -85,7 +90,7 @@ const TableList = (props) => {
             <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                 <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
-                    <th scope="col" className="p-4">
+                    <th scope="col" className="p-3">
                         <div className="flex items-center">
                             <input id="checkbox-all-search" type="checkbox"
                                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
@@ -94,6 +99,9 @@ const TableList = (props) => {
                     </th>
                     <th scope="col" className="px-6 py-3">
                         Name
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                        Category
                     </th>
                     <th scope="col" className="px-6 py-3">
                         Format
@@ -118,12 +126,31 @@ const TableList = (props) => {
                         </td>
                         <th scope="row" className="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
                             <img className="w-24 h-20 rounded-lg" src={document.image}
-                                 alt="Jese image" />
+                                 width="100%"
+                                 alt="" />
                             <div className="pl-3">
-                                <div className="text-base font-semibold">{document.name}</div>
+                                <Link
+                                    href={`/nft`} // Specify the URL you want to redirect to
+                                    onClick={() =>
+                                        dispatch(
+                                            setNftAttributes({
+                                                name: document.name,
+                                                format: document.format,
+                                                image: document.image,
+                                                status: document.status,
+                                                category: document.category,
+                                            })
+                                        )
+                                    }
+                                >
+                                    <div className="text-base font-semibold hover:underline">{document.name}</div>
+                                </Link>
                                 {/*<div className="font-normal text-gray-500">{document.format}</div>*/}
                             </div>
                         </th>
+                        <td className="px-6 py-4">
+                            {document.category}
+                        </td>
                         <td className="px-6 py-4">
                             {document.format}
                         </td>
