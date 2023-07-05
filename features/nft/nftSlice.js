@@ -4,14 +4,26 @@ import { HYDRATE } from "next-redux-wrapper";
 export const nftSlice = createSlice({
     name: "nft",
     initialState: {
-        value: {}
+        value: {
+            name: null,
+            format: null,
+            image: null,
+            status: null,
+            category: null
+        }
     },
     reducers: {
-        nftAttributes: (state, action) => {
+        setNftAttributes: (state, action) => {
             state.value = action.payload;
         },
         clearNft: state => {
-            state.value = {};
+            state.value = {
+                name: null,
+                format: null,
+                image: null,
+                status: null,
+                category: null
+            };
         },
     },
     extraReducers: {
@@ -24,6 +36,6 @@ export const nftSlice = createSlice({
     },
 });
 
-export const { nftAttributes, clearNft } = nftSlice.actions
+export const { setNftAttributes, clearNft } = nftSlice.actions
 
 export default nftSlice.reducer;

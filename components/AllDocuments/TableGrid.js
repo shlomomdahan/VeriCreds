@@ -1,7 +1,12 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from 'framer-motion';
+import { useDispatch } from 'react-redux';
+import { setNftAttributes } from '@/features/nft/nftSlice';
+import Link from 'next/link';
 
 const TableGrid = (props) => {
+    const dispatch = useDispatch();
+
     const [searchTerm, setSearchTerm] = useState('');
     const [filteredCollection, setFilteredCollection] = useState(props.collection);
     const [isAnyCardFlipped, setIsAnyCardFlipped] = useState(false);
@@ -132,7 +137,24 @@ const TableGrid = (props) => {
                                     className="absolute inset-0 flex items-center justify-center"
                                 >
                                     <div className="flex flex-col items-center justify-center p-6 bg-white shadow-lg rounded-lg min-w-full min-h-full">
-                                        <div className="font-bold text-2xl mb-2 text-gray-900">{document.name}</div>
+                                        <Link
+                                            href={`/nft`} // Specify the URL you want to redirect to
+                                            onClick={() =>
+                                                dispatch(
+                                                    setNftAttributes({
+                                                        name: document.name,
+                                                        format: document.format,
+                                                        image: document.image,
+                                                        status: document.status,
+                                                        category: document.category,
+                                                    })
+                                                )
+                                            }
+                                        >
+                                            <div className="font-bold text-2xl mb-2 text-gray-900 hover:underline">
+                                                {document.name}
+                                            </div>
+                                        </Link>
                                         <p className="text-gray-600 text-lg mb-2">Format: {document.format}</p>
                                         <div className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium ${document.status === "minted" ? "bg-blue-700 text-white" : document.status === "verified" ? "bg-green-500 text-white" : "bg-yellow-300 text-gray-800"} mr-2`}>
                                             {document.status}
