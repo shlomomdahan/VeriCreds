@@ -2,9 +2,9 @@ import Head from 'next/head'
 import Sidebar from '@/components/Sidebar';
 import Topbar from '@/components/Topbar';
 import { getSession } from "next-auth/react";
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import axios from "axios";
-import ReCAPTCHA from "react-google-recaptcha";
+import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -12,6 +12,8 @@ const Contact = () => {
     const recaptchaRef = useRef();
     const [inputs, setInputs] = useState({email: "", subject: "", message: ""});
     const [loading, setLoading] = useState(false);
+
+    const { executeRecaptcha } = useGoogleReCaptcha();
 
     const handleOnChange = (event) => {
         event.persist();
@@ -39,8 +41,27 @@ const Contact = () => {
         }
     };
 
+
+
+    // Create an event handler, so you can call the verification on button click event or form submit
+    const handleReCaptchaVerify = useCallback(async () => {
+        if (!executeRecaptcha) {
+            console.log('Execute recaptcha not yet available');
+            return;
+        }
+
+        const token = await executeRecaptcha('submit');
+        // Do whatever you want with the token
+    }, [executeRecaptcha]);
+
+    // You can use useEffect to trigger the verification as soon as the component being loaded
+    useEffect(() => {
+        handleReCaptchaVerify();
+    }, [handleReCaptchaVerify]);
+
+
     return (
-        <div>
+        <>
             <Head>
                 <title>VeriCreds | Contact</title>
                 <meta name="description" content="VeriCreds app" />
@@ -88,17 +109,20 @@ const Contact = () => {
                                 className="w-full px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
                                 required
                             />
-                            <ReCAPTCHA
-                                ref={recaptchaRef}
-                                sitekey="your recaptcha site key"
-                            />
-                            <button type="submit" disabled={loading} className={`py-2 px-4 bg-indigo-500 text-white font-semibold rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}> Send Message </button>
+                                <button
+                                  onClick={handleReCaptchaVerify}
+                                  type="submit"
+                                  disabled={loading}
+                                  className={`py-2 px-4 bg-indigo-500 text-white font-semibold rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}>
+                                    Send Message
+                                </button>
+
                         </form>
                     </div>
                 </div>
             </div>
             <ToastContainer position="bottom-right" autoClose={5000} />
-        </div>
+    </>
     );
 }
 
