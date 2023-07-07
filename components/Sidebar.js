@@ -10,7 +10,7 @@ const Sidebar = () => {
           <Link href="/overview">
             <Image
               src="/logo.png"
-              alt="VeriCred Logo"
+              alt="VeriCreds Logo"
               width={50}
               height={50}
             />
@@ -35,7 +35,7 @@ const Sidebar = () => {
               height={20}
               className="mr-2"
             />
-            <Link href="/about" className="text-white hover:text-black">Shared Docs</Link>
+            <Link href="/about" className="text-white hover:text-black">About</Link>
           </li>
           <li className="mb-4 flex items-center">
             <Image
@@ -45,8 +45,18 @@ const Sidebar = () => {
               height={20}
               className="mr-2"
             />
-            <Link href="/contact" className="text-white hover:text-black">Verified Docs</Link>
+            <Link href="/contact" className="text-white hover:text-black">Contact Us</Link>
           </li>
+            <li className="mb-4 flex items-center">
+                <Image
+                    src="/sidebar-verified.png"
+                    alt="Logo 3"
+                    width={20}
+                    height={20}
+                    className="mr-2"
+                />
+                <Link href="/contact" className="text-white hover:text-black">About</Link>
+            </li>
         </ul>
       </div>
     );
