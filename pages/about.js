@@ -1,10 +1,6 @@
 import Head from 'next/head'
-import { Inter } from 'next/font/google'
-import styles from '@/styles/Home.module.css'
-import { useEvmNativeBalance } from '@moralisweb3/next';
-import Sidebar from '../../components/Sidebar';
-import Topbar from '../../components/Topbar';
-import Index from '../../components/AllDocuments';
+import Sidebar from '@/components/Sidebar';
+import Topbar from '@/components/Topbar';
 import { getSession } from "next-auth/react";
 
 const About = () => {
