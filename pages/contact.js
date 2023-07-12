@@ -48,8 +48,14 @@ const Contact = (props) => {
             setLoading(true);
             if (res.data.status !== "error") {
                 toast.success("Message sent successfully");
+                setTimeout(() => {
+                    window.location.reload(false);
+                }, 5000);
             } else {
                 toast.error("An error occurred while sending the message");
+                setTimeout(() => {
+                    window.location.reload(false);
+                }, 5000);
             }
         });
     }
@@ -136,7 +142,7 @@ const Contact = (props) => {
                                 className={`py-3 px-5 text-sm font-medium text-center text-white rounded-lg bg-primary-700 sm:w-fit hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}>
                                   Send Message
                               </button>
-                              {token && <p>Token: {token}</p>}
+                              {/*{token && <p>Token: {token}</p>}*/}
                           </form>
                       </div>
                   </section>
