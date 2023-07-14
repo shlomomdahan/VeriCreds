@@ -4,7 +4,7 @@ import {signOut} from "next-auth/react";
 // project imports
 import TableList from "@/components/AllDocuments/TableList";
 import TableGrid from "@/components/AllDocuments/TableGrid";
-import Modal from '../modals/Modal';
+import UploadModal from '../modals/UploadModal';
 
 const AllDocuments = (props) => {
 
@@ -108,6 +108,8 @@ const AllDocuments = (props) => {
       category: "Transcripts"
     }
   ]
+
+  const [fileChosen, setFileChosen] = useState(false);
 
   // Set state variable for showing grid view
   const [viewMode, setViewMode] = useState('list');
@@ -219,7 +221,10 @@ const AllDocuments = (props) => {
       </div>
       {
         showUploadModal &&
-        <Modal cancelHandler={() => setShowUploadModal(false)}/>
+        <UploadModal
+            fileChosen={fileChosen}
+            setFileChosen={setFileChosen}
+            cancelHandler={() => setShowUploadModal(false)}/>
       }
     </>
   );
