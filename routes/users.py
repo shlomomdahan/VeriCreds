@@ -69,11 +69,6 @@ def login():
             'password': {
                 'string': {'minlength': 8, 'maxlength': 999}
             }}
-        # v = Validator(schema)
-        # credentials = {'email_address': data.get('email_address'), 'password': data.get('password')}
-        # is_validated = v.validate(credentials)
-        # if is_validated is not True:
-        #     return dict(message='Invalid data', data=None, error=is_validated), 400
         user = User().login(
             data["metamask_address"],
             data["password"]
@@ -96,7 +91,7 @@ def login():
                     "message": str(e)
                 }, 500
         return {
-            "message": "Error fetching auth token, invalid email or password",
+            "message": "Error fetching auth token, invalid metamask address or password",
             "data": None,
             "error": "Unauthorized"
         }, 404
@@ -106,6 +101,15 @@ def login():
             "error": str(e),
             "data": None
         }, 500
+
+
+@users.route("/<metamask_address>", methods=["GET"])
+def get_single_user(metamask_address):
+    user = User.get_user_by_metamask_address(metamask_address)
+    return jsonify({
+        "message": "Successfully retrieved user profile",
+        "data": user
+    })
 
 
 @users.route("/", methods=["GET"])
@@ -118,14 +122,14 @@ def get_all_users():
     })
 
 
-@users.route("/<user_id>", methods=["GET"])
-@token_required
-def get_single_user(user_id):
-    user = User.get_user_by_id(user_id)
-    return jsonify({
-        "message": "Successfully retrieved user profile",
-        "data": user
-    })
+# @users.route("/<user_id>", methods=["GET"])
+# @token_required
+# def get_single_user(user_id):
+#     user = User.get_user_by_id(user_id)
+#     return jsonify({
+#         "message": "Successfully retrieved user profile",
+#         "data": user
+#     })
 
 
 @users.route("/", methods=["PUT"])
