@@ -1,8 +1,6 @@
 from functools import wraps
-import jwt
-from flask import request, abort
-from flask import current_app
-import models
+import jwt, os
+from flask import request
 
 
 # A decorator for requiring token authentication
@@ -19,16 +17,7 @@ def token_required(f):
                 "error": "Unauthorized"
             }, 401
         try:
-            data = jwt.decode(token, current_app.config["SECRET_KEY"], algorithms=["HS512"])
-            current_user = models.User().get_user_by_id(data["_id"])
-            if current_user is None:
-                return {
-                    "message": "Invalid authentication token",
-                    "data": None,
-                    "error": "Unauthorized"
-                }, 401
-            if not current_user["active"]:
-                abort(403)
+            data = jwt.decode(token, os.getenv("SECRET_KEY"), algorithms=["HS512"])
         except Exception as e:
             return {
                 "message": "Something went wrong",
@@ -36,6 +25,6 @@ def token_required(f):
                 "error": str(e)
             }, 500
 
-        return f(current_user, *args, **kwargs)
+        return f(*args, **kwargs)
 
     return decorated

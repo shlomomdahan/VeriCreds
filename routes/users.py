@@ -1,8 +1,7 @@
 import os, jwt
-from flask import Blueprint, request, jsonify, current_app
+from flask import Blueprint, request, jsonify
 from cerberus import Validator
 from models import User
-from werkzeug.security import generate_password_hash, check_password_hash
 from auth_middleware import token_required
 from dotenv import load_dotenv
 
@@ -76,7 +75,7 @@ def login():
         # if is_validated is not True:
         #     return dict(message='Invalid data', data=None, error=is_validated), 400
         user = User().login(
-            data["email_address"],
+            data["metamask_address"],
             data["password"]
         )
         if user:
@@ -161,7 +160,7 @@ def update_user():
 
 
 @users.route("/<user_id>", methods=["DELETE"])
-@token_required
+# @token_required
 def delete_user_account(user_id):
     try:
         User().delete_user(user_id)
