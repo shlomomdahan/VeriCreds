@@ -76,7 +76,7 @@ def get_nft_by_id(nft_id):
 
         return jsonify({
             "message": "Successfully retrieved NFT",
-            "data": nft
+            "data": json.loads(json_util.dumps(nft))
         })
 
     except Exception as e:
@@ -102,7 +102,7 @@ def update_nft(nft_id):
 
         return jsonify({
             "message": "Successfully updated NFT",
-            "data": updated_nft
+            "data": json.loads(json_util.dumps(updated_nft))
         }), 200
 
     except Exception as e:
