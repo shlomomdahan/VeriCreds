@@ -1,33 +1,30 @@
 from flask import Blueprint, request, jsonify
-from cerberus import Validator
+from flask_cors import CORS
+from bson import json_util
+import json
 
 from auth_middleware import token_required
 from models import NFT
 
 nfts = Blueprint('nfts', __name__, template_folder='routes')
+CORS(nfts)
 
 
 @nfts.route('/', methods=['POST'])
 @token_required
 def add_nft():
     try:
-        nft_data = request.get_json()
-        if not nft_data:
+        nft = request.get_json()
+
+        if not nft:
             return jsonify({
                 "message": "Please provide NFT details",
                 "data": None,
                 "error": "Bad request"
             }), 400
 
-        # Assuming a Validator checks the schema of the NFT
-        try:
-            # Placeholder: Adjust validation as per your schema
-            is_validated = Validator(**nft_data)
-        except Exception as validation_error:
-            return jsonify(dict(message='Invalid data', data=None, error=str(validation_error))), 400
-
-        nft_id = NFT.add_nft(**nft_data)
-        if not nft_id:
+        nft = NFT.add_nft(**nft)
+        if not nft:
             return jsonify({
                 "message": "NFT could not be added",
                 "error": "Conflict",
@@ -36,7 +33,7 @@ def add_nft():
 
         return jsonify({
             "message": "Successfully added new NFT",
-            "data": {"_id": nft_id}
+            "data": json.loads(json_util.dumps(nft))
         }), 201
 
     except Exception as e:

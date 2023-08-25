@@ -1,10 +1,12 @@
 from flask import Blueprint, request, jsonify
 from cerberus import Validator
+from flask_cors import CORS
 
 from auth_middleware import token_required
 from models import SmartContract
 
 smart_contracts = Blueprint('smart_contracts', __name__, template_folder='routes')
+CORS(smart_contracts)
 
 
 @smart_contracts.route('/', methods=['POST'])

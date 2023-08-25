@@ -305,7 +305,7 @@ class NFT:
     def add_nft(nft_id="", user_id="", meta_data="", contract_id="", name="", format="", image="", status="",
                 category="", created_at=None):
         """
-        add a NFT
+        add an NFT
         """
         if not created_at:
             created_at = datetime.now()

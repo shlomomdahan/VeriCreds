@@ -1,13 +1,16 @@
 import os
 from dotenv import load_dotenv
 from flask import Flask
+from flask_cors import CORS
 
 load_dotenv()
 
 
 def create_app():
     app = Flask(__name__, template_folder='routes')
-
+    # CORS(app,
+    #      origins=["http://localhost:3000/", "http://127.0.0.1:5000/nfts/"])
+    CORS(app, origins=["http://localhost:3000", "http://127.0.0.1:5000"])
     from mongo import MongoConnection
     mongo = MongoConnection.get_instance()
 

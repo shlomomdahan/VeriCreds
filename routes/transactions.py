@@ -2,8 +2,10 @@ from flask import Blueprint, request, jsonify
 from cerberus import Validator
 from models import Transaction  # Assuming you have a Transaction model like the User model
 from auth_middleware import token_required
+from flask_cors import CORS
 
 transactions = Blueprint('transactions', __name__, template_folder='routes')
+CORS(transactions)
 
 
 @transactions.route('/', methods=['POST'])

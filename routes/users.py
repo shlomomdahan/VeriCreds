@@ -1,6 +1,8 @@
 import os, jwt
 from flask import Blueprint, request, jsonify
 from cerberus import Validator
+from flask_cors import CORS
+
 from models import User
 from auth_middleware import token_required
 from dotenv import load_dotenv
@@ -10,6 +12,7 @@ load_dotenv()
 
 
 users = Blueprint('users', __name__, template_folder='routes')
+CORS(users)
 
 
 @users.route('/', methods=['POST'])
