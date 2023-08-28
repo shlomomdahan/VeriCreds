@@ -1,5 +1,8 @@
 import { useState, useEffect } from "react";
 import * as backendRequests from "../../pages/api/backendRequests";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const UploadModal = (props) => {
   const [file, setFile] = useState(undefined);
@@ -64,81 +67,94 @@ const UploadModal = (props) => {
       created_at: new Date(),
     };
 
-    backendRequests.addNft(documentInfo);
+    //   backendRequests.addNft(documentInfo);
+    // }, [cid]);
+    backendRequests.addNft(documentInfo)
+      .then(response => {
+        if (response.success) {
+          toast.success(response.message);
+          props.cancelHandler();
+        } else {
+          toast.error(response.message);
+        }
+      })
+      .catch(error => {
+        toast.error("An unexpected error occurred.");
+      });
   }, [cid]);
 
   return (
-    <div className="modal-background">
-      <div className="modal-content">
-        <h2 className="text-xl font-bold mb-2">Upload Document</h2>
-        <DragDropFile setFile={setFile} setInvalidFile={setInvalidFile} />
-        {invalidFile && (
-          <p className="error">
-            Invalid file type. Please choose a PDF, PNG, or JPEG file.
-          </p>
-        )}
-        {file && (
-          <>
-            <p style={{ fontStyle: "italic" }}>{file.name}</p>
-            {/*<div>
-              <label htmlFor="status">Status </label>
-              <select name="status" id="status" onChange={(e) => setStatus(e.target.value)}>
-                <option value="minted">Minted</option>
-                <option value="shared">Shared</option>
-                <option value="verified">Verified</option>
-              </select>
-            </div>*/}
-            {(file.type === "image/png" || file.type === "image/jpeg") && (
-              <img className="preview" src={preview} />
-            )}
-            {file.type === "application/pdf" && <iframe src={preview} />}
-            <div>
-              <label htmlFor="category">Category </label>
-              <select
-                name="category"
-                id="category"
-                onChange={(e) => setCategory(e.target.value)}
-              >
-                {categories.map((category) => {
-                  return (
-                    <option key={category} value={category.toLowerCase()}>
-                      {category}
-                    </option>
-                  );
-                })}
-              </select>
-            </div>
-          </>
-        )}
-        <div>
-          <span className="pr-1">
-            <button
+      <div className="modal-background">
+        <div className="modal-content">
+          <h2 className="text-xl font-bold mb-2">Upload Document</h2>
+          <DragDropFile setFile={setFile} setInvalidFile={setInvalidFile}/>
+          {invalidFile && (
+              <p className="error">
+                Invalid file type. Please choose a PDF, PNG, or JPEG file.
+              </p>
+          )}
+          {file && (
+              <>
+                <p style={{fontStyle: "italic"}}>{file.name}</p>
+                {/*<div>
+                  <label htmlFor="status">Status </label>
+                  <select name="status" id="status" onChange={(e) => setStatus(e.target.value)}>
+                    <option value="minted">Minted</option>
+                    <option value="shared">Shared</option>
+                    <option value="verified">Verified</option>
+                  </select>
+                </div>*/}
+                {(file.type === "image/png" || file.type === "image/jpeg") && (
+                    <img className="preview" src={preview}/>
+                )}
+                {file.type === "application/pdf" && <iframe src={preview}/>}
+                <div>
+                  <label htmlFor="category">Category </label>
+                  <select
+                      name="category"
+                      id="category"
+                      onChange={(e) => setCategory(e.target.value)}
+                  >
+                    {categories.map((category) => {
+                      return (
+                          <option key={category} value={category.toLowerCase()}>
+                            {category}
+                          </option>
+                      );
+                    })}
+                  </select>
+                </div>
+              </>
+          )}
+          <div>
+        <span className="pr-1">
+          <button
               className={`${
-                file
-                  ? "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
-                  : "bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-full"
+                  file
+                      ? "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+                      : "bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-full"
               } text-${file ? "white" : "gray"}-500`}
               onClick={uploadToIPFS}
-              style={{ cursor: !file ? "not-allowed" : "" }}
+              style={{cursor: !file ? "not-allowed" : ""}}
               disabled={!file}
-            >
-              Confirm
-            </button>
-          </span>
-          <span className="pl-1">
-            <button
+          >
+            Confirm
+          </button>
+        </span>
+            <span className="pl-1">
+          <button
               className="bg-gray-200 hover:bg-gray-300 text-gray-500 font-bold py-2 px-4 rounded-full"
               onClick={() => {
                 props.cancelHandler();
                 setFile(undefined);
               }}
-            >
-              Cancel
-            </button>
-          </span>
+          >
+            Cancel
+          </button>
+        </span>
+          </div>
         </div>
       </div>
-    </div>
   );
 };
 
