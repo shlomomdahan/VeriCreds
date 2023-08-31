@@ -19,7 +19,7 @@ const addNft = async (documentInfo) => {
         contract_id: "",
         name: documentInfo.name,
         format: documentInfo.format,
-        image: "",
+        image: documentInfo.image,
         status: documentInfo.status,
         category: documentInfo.category,
         created_at: documentInfo.created_at

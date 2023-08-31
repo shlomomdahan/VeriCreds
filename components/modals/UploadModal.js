@@ -41,6 +41,32 @@ const UploadModal = (props) => {
     }
   };
 
+  // const fileToBase64 = (file) => {
+  //   return new Promise((resolve, reject) => {
+  //     const reader = new FileReader();
+  //     reader.readAsDataURL(file);
+  //     reader.onload = () => {
+  //       let base64Data = reader.result.split(',')[1];
+  //       console.log("base64Dataz!!!!!: ", base64Data);
+  //       resolve(base64Data);
+  //     };
+  //     reader.onerror = (error) => {
+  //       reject(error);
+  //     };
+  //   });
+  // };
+
+  const fileToBase64 = (file) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    return new Promise((resolve) => {
+      reader.onload = () => {
+        let base64Data = reader.result.split(',')[1];
+        resolve(base64Data);
+      };
+    });
+  };
+
   useEffect(() => {
     if (!file) {
       setPreview(undefined);
@@ -54,37 +80,45 @@ const UploadModal = (props) => {
     return () => URL.revokeObjectURL(objectUrl);
   }, [file]);
 
+  const processFileAndUpload = async () => {
+    try {
+      const base64Data = await fileToBase64(file);
+
+      const documentInfo = {
+        nft_id: cid,
+        user_id: props.user.address,
+        name: file.name,
+        format: file.type.split("/")[1].toUpperCase(),
+        image: base64Data,
+        status: "Uploaded",
+        category: category,
+        created_at: new Date(),
+      };
+
+      const response = await backendRequests.addNft(documentInfo);
+
+      if (response.success) {
+        toast.success(response.message);
+        props.setUploadSuccess(true);
+        props.cancelHandler();
+      } else {
+        toast.error(response.message);
+        props.setUploadSuccess(false);
+      }
+    } catch (error) {
+      console.error("An error occurred:", error);
+      toast.error("An unexpected error occurred.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   useEffect(() => {
     if (!cid) {
       return;
     }
 
-    const documentInfo = {
-      nft_id: cid,
-      user_id: props.user.address,
-      name: file.name,
-      format: file.type.split("/")[1].toUpperCase(),
-      status: "Uploaded",
-      category: category,
-      created_at: new Date(),
-    };
-
-    backendRequests.addNft(documentInfo)
-      .then(response => {
-        if (response.success) {
-          toast.success(response.message);
-          props.setUploadSuccess(true);
-          props.cancelHandler();
-          setIsLoading(false);
-        } else {
-          toast.error(response.message);
-          props.setUploadSuccess(false);
-          setIsLoading(false);
-        }
-      })
-      .catch(error => {
-        toast.error("An unexpected error occurred.");
-      });
+    processFileAndUpload();
   }, [cid]);
 
   return (
