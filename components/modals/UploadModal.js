@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import * as backendRequests from "../../pages/api/backendRequests";
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
@@ -9,8 +9,9 @@ const UploadModal = (props) => {
   const [cid, setCid] = useState("");
   const [invalidFile, setInvalidFile] = useState(false);
   const [preview, setPreview] = useState();
-  const [status, setStatus] = useState(undefined);
+  // const [status, setStatus] = useState(undefined);
   const [category, setCategory] = useState(undefined);
+  const [isLoading, setIsLoading] = useState(false);
 
   const categories = [
     "Certificate",
@@ -23,6 +24,7 @@ const UploadModal = (props) => {
   ];
 
   const uploadToIPFS = async () => {
+    setIsLoading(true);
     try {
       const formData = new FormData();
       formData.append("file", file, { filename: file.name });
@@ -67,15 +69,17 @@ const UploadModal = (props) => {
       created_at: new Date(),
     };
 
-    //   backendRequests.addNft(documentInfo);
-    // }, [cid]);
     backendRequests.addNft(documentInfo)
       .then(response => {
         if (response.success) {
           toast.success(response.message);
+          props.setUploadSuccess(true);
           props.cancelHandler();
+          setIsLoading(false);
         } else {
           toast.error(response.message);
+          props.setUploadSuccess(false);
+          setIsLoading(false);
         }
       })
       .catch(error => {
@@ -87,6 +91,7 @@ const UploadModal = (props) => {
       <div className="modal-background">
         <div className="modal-content">
           <h2 className="text-xl font-bold mb-2">Upload Document</h2>
+          {isLoading && (<p className={"text-gray-800"}><em>Uploading Document: Please Wait...</em></p>)}
           <DragDropFile setFile={setFile} setInvalidFile={setInvalidFile}/>
           {invalidFile && (
               <p className="error">
@@ -130,20 +135,20 @@ const UploadModal = (props) => {
         <span className="pr-1">
           <button
               className={`${
-                  file
+                  (file && !isLoading)
                       ? "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
                       : "bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-full"
               } text-${file ? "white" : "gray"}-500`}
               onClick={uploadToIPFS}
               style={{cursor: !file ? "not-allowed" : ""}}
-              disabled={!file}
+              disabled={!file || (file && isLoading)}
           >
             Confirm
           </button>
         </span>
             <span className="pl-1">
           <button
-              className="bg-gray-200 hover:bg-gray-300 text-gray-500 font-bold py-2 px-4 rounded-full"
+              className={`bg-gray-200 "hover:bg-gray-300 text-gray-500 font-bold py-2 px-4 rounded-full`}
               onClick={() => {
                 props.cancelHandler();
                 setFile(undefined);
@@ -192,6 +197,7 @@ const DragDropFile = (props) => {
       if (isValidFile(e.target.files[0])) {
         props.setFile(e.target.files[0]);
         props.setInvalidFile(false);
+
       } else {
         props.setFile(undefined);
         props.setInvalidFile(true);

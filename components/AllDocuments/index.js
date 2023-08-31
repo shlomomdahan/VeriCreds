@@ -1,111 +1,151 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 
 // project imports
 import TableList from "@/components/AllDocuments/TableList";
 import TableGrid from "@/components/AllDocuments/TableGrid";
 import UploadModal from "../modals/UploadModal";
-import {ToastContainer} from "react-toastify";
+import { ToastContainer } from "react-toastify";
+import axios from "axios";
 
 const AllDocuments = (props) => {
-  // console.log(props.user);
+  const [uploadSuccess, setUploadSuccess] = useState(false);
+  const [nfts, setNfts] = useState([]);
 
-  const collection = [
-    {
-      name: "document1",
-      format: "PDF",
-      image: "https://flowbite.s3.amazonaws.com/docs/gallery/square/image.jpg",
-      status: "verified",
-      category: "Identification",
-    },
-    {
-      name: "document2",
-      format: "PDF",
-      image:
-        "https://flowbite.s3.amazonaws.com/docs/gallery/square/image-1.jpg",
-      status: "minted",
-      category: "Reference Letters",
-    },
-    {
-      name: "document3",
-      format: "PNG",
-      image:
-        "https://flowbite.s3.amazonaws.com/docs/gallery/square/image-2.jpg",
-      status: "shared",
-      category: "Certificates",
-    },
-    {
-      name: "document4",
-      format: "PDF",
-      image:
-        "https://flowbite.s3.amazonaws.com/docs/gallery/square/image-3.jpg",
-      status: "minted",
-      category: "Reference Letters",
-    },
-    {
-      name: "document5",
-      format: "PDF",
-      image:
-        "https://flowbite.s3.amazonaws.com/docs/gallery/square/image-4.jpg",
-      status: "shared",
-      category: "Identification",
-    },
-    {
-      name: "document6",
-      format: "PDF",
-      image:
-        "https://flowbite.s3.amazonaws.com/docs/gallery/square/image-5.jpg",
-      status: "verified",
-      category: "Others",
-    },
-    {
-      name: "document7",
-      format: "PDF",
-      image:
-        "https://flowbite.s3.amazonaws.com/docs/gallery/square/image-6.jpg",
-      status: "minted",
-      category: "Certificates",
-    },
-    {
-      name: "document8",
-      format: "PDF",
-      image:
-        "https://flowbite.s3.amazonaws.com/docs/gallery/square/image-7.jpg",
-      status: "shared",
-      category: "Transcripts",
-    },
-    {
-      name: "document9",
-      format: "JPEG",
-      image:
-        "https://flowbite.s3.amazonaws.com/docs/gallery/square/image-8.jpg",
-      status: "minted",
-      category: "Reference Letters",
-    },
-    {
-      name: "document10",
-      format: "PDF",
-      image:
-        "https://flowbite.s3.amazonaws.com/docs/gallery/square/image-9.jpg",
-      status: "shared",
-      category: "Recommendation Letters",
-    },
-    {
-      name: "Recommendation",
-      format: "PNG",
-      image:
-        "https://flowbite.s3.amazonaws.com/docs/gallery/square/image-10.jpg",
-      status: "shared",
-      category: "Diplomas",
-    },
-    {
-      name: "Transcript",
-      format: "PDF",
-      image:
-        "https://flowbite.s3.amazonaws.com/docs/gallery/square/image-11.jpg",
-      status: "minted",
-      category: "Transcripts",
-    },
-  ];
+  // console.log(props.user);
+  let token = "";
+
+  if (typeof window !== "undefined") {
+    token = window?.localStorage?.getItem('Token');
+  }
+
+  useEffect(() => {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`
+      },
+      withCredentials: false,
+    };
+
+    axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/nfts/`,
+        config
+    ).then((response) => {
+      console.log(response.data.data);
+      setNfts(response.data.data);
+    }).catch((error) => {
+      console.error(error);
+    });
+  }, [token, uploadSuccess]);
+
+  const [collection, setCollection] = useState([]);
+
+  useEffect(() => {
+      setCollection(nfts.map((nft) => {
+        return { ...nft,
+            image: "https://flowbite.s3.amazonaws.com/docs/gallery/square/image.jpg",
+            category: "Other",
+        };
+      }));
+      setUploadSuccess(false);
+  }, [nfts]);
+
+  // const collection = [
+  //   {
+  //     name: "document1",
+  //     format: "PDF",
+  //     image: "https://flowbite.s3.amazonaws.com/docs/gallery/square/image.jpg",
+  //     status: "verified",
+  //     category: "Identification",
+  //   },
+  //   {
+  //     name: "document2",
+  //     format: "PDF",
+  //     image:
+  //       "https://flowbite.s3.amazonaws.com/docs/gallery/square/image-1.jpg",
+  //     status: "minted",
+  //     category: "Reference Letters",
+  //   },
+  //   {
+  //     name: "document3",
+  //     format: "PNG",
+  //     image:
+  //       "https://flowbite.s3.amazonaws.com/docs/gallery/square/image-2.jpg",
+  //     status: "shared",
+  //     category: "Certificates",
+  //   },
+  //   {
+  //     name: "document4",
+  //     format: "PDF",
+  //     image:
+  //       "https://flowbite.s3.amazonaws.com/docs/gallery/square/image-3.jpg",
+  //     status: "minted",
+  //     category: "Reference Letters",
+  //   },
+  //   {
+  //     name: "document5",
+  //     format: "PDF",
+  //     image:
+  //       "https://flowbite.s3.amazonaws.com/docs/gallery/square/image-4.jpg",
+  //     status: "shared",
+  //     category: "Identification",
+  //   },
+  //   {
+  //     name: "document6",
+  //     format: "PDF",
+  //     image:
+  //       "https://flowbite.s3.amazonaws.com/docs/gallery/square/image-5.jpg",
+  //     status: "verified",
+  //     category: "Others",
+  //   },
+  //   {
+  //     name: "document7",
+  //     format: "PDF",
+  //     image:
+  //       "https://flowbite.s3.amazonaws.com/docs/gallery/square/image-6.jpg",
+  //     status: "minted",
+  //     category: "Certificates",
+  //   },
+  //   {
+  //     name: "document8",
+  //     format: "PDF",
+  //     image:
+  //       "https://flowbite.s3.amazonaws.com/docs/gallery/square/image-7.jpg",
+  //     status: "shared",
+  //     category: "Transcripts",
+  //   },
+  //   {
+  //     name: "document9",
+  //     format: "JPEG",
+  //     image:
+  //       "https://flowbite.s3.amazonaws.com/docs/gallery/square/image-8.jpg",
+  //     status: "minted",
+  //     category: "Reference Letters",
+  //   },
+  //   {
+  //     name: "document10",
+  //     format: "PDF",
+  //     image:
+  //       "https://flowbite.s3.amazonaws.com/docs/gallery/square/image-9.jpg",
+  //     status: "shared",
+  //     category: "Recommendation Letters",
+  //   },
+  //   {
+  //     name: "Recommendation",
+  //     format: "PNG",
+  //     image:
+  //       "https://flowbite.s3.amazonaws.com/docs/gallery/square/image-10.jpg",
+  //     status: "shared",
+  //     category: "Diplomas",
+  //   },
+  //   {
+  //     name: "Transcript",
+  //     format: "PDF",
+  //     image:
+  //       "https://flowbite.s3.amazonaws.com/docs/gallery/square/image-11.jpg",
+  //     status: "minted",
+  //     category: "Transcripts",
+  //   },
+  // ];
+
 
   const [fileChosen, setFileChosen] = useState(false);
 
@@ -116,8 +156,6 @@ const AllDocuments = (props) => {
   const [showUploadModal, setShowUploadModal] = useState(false);
 
   const [isHovered, setIsHovered] = useState(false);
-
-  // const [uploadSuccess, setUploadSuccess] = useState(true);
 
   const buttonStyle = {
     position: "fixed",
@@ -300,8 +338,8 @@ const AllDocuments = (props) => {
           setFileChosen={setFileChosen}
           cancelHandler={() => setShowUploadModal(false)}
           user={props.user}
-          // uploadSuccess={uploadSuccess}
-          // setUploadSuccess={setUploadSuccess}
+          uploadSuccess={uploadSuccess}
+          setUploadSuccess={setUploadSuccess}
         />
       )}
     </>

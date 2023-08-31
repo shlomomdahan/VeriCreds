@@ -99,8 +99,8 @@ const TableGrid = (props) => {
                 >
                     All categories
                 </button>
-                {categories.map(category => (
-                    <CategoryButton category={category} key={category} />
+                {categories.map((category, index) => (
+                    <CategoryButton category={category} key={index} />
                 ))}
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 gap-x-4 gap-y-4">
@@ -113,7 +113,7 @@ const TableGrid = (props) => {
                         <AnimatePresence>
                             {!document.isFlipped && (
                                 <motion.div
-                                    key={document.name + 'front'}
+                                    key={index}
                                     initial={{ opacity: 0, scale: 0.5 }}
                                     animate={{ opacity: 1, scale: 1 }}
                                     exit={{ opacity: 0, scale: 0.5 }}
@@ -129,7 +129,7 @@ const TableGrid = (props) => {
                             )}
                             {document.isFlipped && (
                                 <motion.div
-                                    key={document.name + 'back'}
+                                    key={index}
                                     initial={{ opacity: 0, scale: 0.5 }}
                                     animate={{ opacity: 1, scale: 1 }}
                                     exit={{ opacity: 0, scale: 0.5 }}

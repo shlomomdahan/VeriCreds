@@ -115,8 +115,8 @@ const TableList = (props) => {
                 </tr>
                 </thead>
                 <tbody>
-                {filteredCollection.map((document) => (
-                    <tr key={document.name} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                {filteredCollection.map((document, index) => (
+                    <tr key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                         <td className="w-4 p-4">
                             <div className="flex items-center">
                                 <input id="checkbox-table-search-1" type="checkbox"
