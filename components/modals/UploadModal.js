@@ -2,7 +2,41 @@ import { useState, useEffect } from "react";
 import * as backendRequests from "../../pages/api/backendRequests";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import pdflib from 'pdfjs-dist'
+// pdflib.PDFWorker .workerSrc = './node_modules/pdfjs-dist/build/pdf.worker.entry.js';
 
+
+const readFileData = (file) => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      resolve(e.target.result);
+    };
+    reader.onerror = (err) => {
+      reject(err);
+    };
+    reader.readAsDataURL(file);
+  });
+};
+
+//return: images -> an array of images encoded in base64
+const convertPdfToImages = async (file) => {
+  const images = [];
+  const data = await readFileData(file);
+  const pdf = await pdflib.getDocument(data).promise;
+  const canvas = document.createElement("canvas");
+  for (let i = 0; i < pdf.numPages; i++) {
+    const page = await pdf.getPage(i + 1);
+    const viewport = page.getViewport({ scale: 1 });
+    const context = canvas.getContext("2d");
+    canvas.height = viewport.height;
+    canvas.width = viewport.width;
+    await page.render({ canvasContext: context, viewport: viewport }).promise;
+    images.append(canvas.toDataURL());
+  }
+  canvas.remove();
+  return images;
+}
 
 const UploadModal = (props) => {
   const [file, setFile] = useState(undefined);
@@ -85,18 +119,13 @@ const UploadModal = (props) => {
           created_at: new Date(),
         };
 
-        // if (file.type === 'application/pdf') {
-        //
-        //   let pdfArray = [];
-        //   pdfArray = await pdf2img.convert(preview);
-        //   console.log("saving");
-        //   console.log(pdfArray);
+        if (file.type === 'application/pdf') {
 
-
-          // if (pngPage.length > 0) {
-          //   documentInfo.image = await fileToBase64(pngPage[0]);
-          // }
-        // }
+          const pdfImagesArray = convertPdfToImages(file)
+          if (pdfImagesArray.length > 0) {
+            documentInfo.image = await fileToBase64(pdfImagesArray[0]);
+          }
+        }
 
         const response = await backendRequests.addNft(documentInfo);
 
