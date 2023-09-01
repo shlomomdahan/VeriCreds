@@ -17,10 +17,6 @@ const TableList = (props) => {
 
     const [selectedIds, setSelectedIds] = useState([]);
 
-    // useEffect(() => {
-    //     console.log(selectedIds);  // This will log the updated state
-    // }, [selectedIds]);
-
     const handleCheckboxChange = (event, nft_id) => {
         if (event.target.checked) {
             // If checked, add the nft_id to the selectedIds array
@@ -39,8 +35,6 @@ const TableList = (props) => {
             window?.location?.reload(false);
         }
     };
-
-
 
     const handleSearchChange = event => setSearchTerm(event.target.value);
 
@@ -70,22 +64,6 @@ const TableList = (props) => {
                             >
                                 Share
                             </li>
-                            {/*<li>*/}
-                            {/*    <a href="@/components/AllDocuments/TableList#"*/}
-                            {/*       className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"*/}
-                            {/*       onClick={(e) => {e.stopPropagation()}}*/}
-                            {/*    >*/}
-                            {/*        Promote*/}
-                            {/*    </a>*/}
-                            {/*</li>*/}
-                            {/*<li>*/}
-                            {/*    <a href="@/components/AllDocuments/TableList#"*/}
-                            {/*       className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"*/}
-                            {/*       onClick={(e) => {e.stopPropagation()}}*/}
-                            {/*    >*/}
-                            {/*        Activate account*/}
-                            {/*    </a>*/}
-                            {/*</li>*/}
                             <li
                                 onClick={handleDelete}
                                 className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white cursor-pointer"
@@ -93,15 +71,6 @@ const TableList = (props) => {
                                 Delete
                             </li>
                         </ul>
-                        {/*<div className="py-1">*/}
-                            {/*<div*/}
-                            {/*onClick={handleDelete}*/}
-                            {/*className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"*/}
-                            {/*>*/}
-                            {/*    Delete*/}
-                            {/*</div>*/}
-                            {/*</a>*/}
-                        {/*</div>*/}
                     </div>
                 </div>
                 <label htmlFor="table-search" className="sr-only">Search</label>
