@@ -269,7 +269,6 @@ class SmartContract:
         contract["_id"] = str(contract["_id"])
         return contract
 
-
     @staticmethod
     def update_contract(contract_id, contract_address="", contract_abi="", updated_at=None):
         """Update a smart contract"""
@@ -338,7 +337,7 @@ class NFT:
     @staticmethod
     def get_nft_by_id(nft_id):
         """Get an NFT by id"""
-        nft = mongo.db.nfts.find_one({"_id": bson.ObjectId(nft_id)})
+        nft = mongo.db.nfts.find_one({"nft_id": nft_id})
         if not nft:
             return
         nft["_id"] = str(nft["_id"])
@@ -388,6 +387,6 @@ class NFT:
         """
         Delete an NFT
         """
-        mongo.db.nfts.delete_one({"_id": bson.ObjectId(nft_id)})
-        return True
-
+        nft = NFT.get_nft_by_id(nft_id)
+        mongo.db.nfts.delete_one({"_id": bson.ObjectId(nft["_id"])})
+        return nft

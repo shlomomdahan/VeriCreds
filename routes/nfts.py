@@ -5,6 +5,7 @@ import json
 
 from auth_middleware import token_required
 from models import NFT
+from dotenv import load_dotenv
 
 nfts = Blueprint('nfts', __name__, template_folder='routes')
 CORS(nfts)
@@ -117,19 +118,11 @@ def update_nft(nft_id):
 @token_required
 def delete_nft(nft_id):
     try:
-        deleted = NFT.delete_nft(nft_id)
-        if not deleted:
-            return jsonify({
-                "message": "Failed to delete NFT or NFT not found",
-                "data": None,
-                "error": "Not Found"
-            }), 404
-
+        NFT().delete_nft(nft_id)
         return jsonify({
             "message": "Successfully deleted NFT",
-            "data": None
-        }), 204
-
+            "data": nft_id
+        }), 200
     except Exception as e:
         return jsonify({
             "message": "Failed to delete NFT",

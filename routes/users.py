@@ -167,7 +167,7 @@ def update_user():
 
 
 @users.route("/<user_id>", methods=["DELETE"])
-# @token_required
+@token_required
 def delete_user_account(user_id):
     try:
         User().delete_user(user_id)
