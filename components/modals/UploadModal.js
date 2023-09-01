@@ -41,21 +41,6 @@ const UploadModal = (props) => {
     }
   };
 
-  // const fileToBase64 = (file) => {
-  //   return new Promise((resolve, reject) => {
-  //     const reader = new FileReader();
-  //     reader.readAsDataURL(file);
-  //     reader.onload = () => {
-  //       let base64Data = reader.result.split(',')[1];
-  //       console.log("base64Dataz!!!!!: ", base64Data);
-  //       resolve(base64Data);
-  //     };
-  //     reader.onerror = (error) => {
-  //       reject(error);
-  //     };
-  //   });
-  // };
-
   const fileToBase64 = (file) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
@@ -80,45 +65,59 @@ const UploadModal = (props) => {
     return () => URL.revokeObjectURL(objectUrl);
   }, [file]);
 
-  const processFileAndUpload = async () => {
-    try {
-      const base64Data = await fileToBase64(file);
-
-      const documentInfo = {
-        nft_id: cid,
-        user_id: props.user.address,
-        name: file.name,
-        format: file.type.split("/")[1].toUpperCase(),
-        image: base64Data,
-        status: "Uploaded",
-        category: category,
-        created_at: new Date(),
-      };
-
-      const response = await backendRequests.addNft(documentInfo);
-
-      if (response.success) {
-        toast.success(response.message);
-        props.setUploadSuccess(true);
-        props.cancelHandler();
-      } else {
-        toast.error(response.message);
-        props.setUploadSuccess(false);
-      }
-    } catch (error) {
-      console.error("An error occurred:", error);
-      toast.error("An unexpected error occurred.");
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   useEffect(() => {
     if (!cid) {
       return;
     }
 
+    const processFileAndUpload = async () => {
+      try {
+        const base64Data = await fileToBase64(file);
+
+        const documentInfo = {
+          nft_id: cid,
+          user_id: props.user.address,
+          name: file.name,
+          format: file.type.split("/")[1].toUpperCase(),
+          image: base64Data,
+          status: "Uploaded",
+          category: category,
+          created_at: new Date(),
+        };
+
+        // if (file.type === 'application/pdf') {
+        //
+        //   let pdfArray = [];
+        //   pdfArray = await pdf2img.convert(preview);
+        //   console.log("saving");
+        //   console.log(pdfArray);
+
+
+          // if (pngPage.length > 0) {
+          //   documentInfo.image = await fileToBase64(pngPage[0]);
+          // }
+        // }
+
+        const response = await backendRequests.addNft(documentInfo);
+
+        if (response.success) {
+          toast.success(response.message);
+          props.setUploadSuccess(true);
+          props.cancelHandler();
+        } else {
+          toast.error(response.message);
+          props.setUploadSuccess(false);
+        }
+      } catch (error) {
+        console.error("An error occurred:", error);
+        toast.error("An unexpected error occurred.");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
     processFileAndUpload();
+
   }, [cid]);
 
   return (

@@ -1,5 +1,40 @@
 import axios from "axios";
 
+const deleteNFT = async (selectedIds) => {
+
+    const token = window?.localStorage?.getItem('Token');
+
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        },
+        withCredentials: false,
+    };
+
+    selectedIds.forEach((id) => {
+
+       axios.delete(`${process.env.NEXT_PUBLIC_BASE_URL}/nfts/${id}`, config)
+        .then((response) => {
+            console.log(response);
+            // Return the response for a successful API call
+            return {
+                success: true,
+                message: "Successfully deleted NFT!"
+            };
+        })
+        .catch((error) => {
+            console.error("Axios error:", error.response ? error.response.data : error.message);
+            // Return the error for a failed API call
+            return {
+                success: false,
+                message: error.response ? error.response.data : "Error deleting NFT!"
+            };
+        });
+    });
+}
+
+
+
 const addNft = async (documentInfo) => {
   const token = window?.localStorage?.getItem('Token');
 
@@ -44,4 +79,4 @@ const addNft = async (documentInfo) => {
       });
 };
 
-export { addNft };
+export { addNft, deleteNFT };
