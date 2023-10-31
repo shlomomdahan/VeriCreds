@@ -2,9 +2,8 @@ import { useState, useEffect } from "react";
 import * as backendRequests from "../../pages/api/backendRequests";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import pdflib from 'pdfjs-dist'
-// pdflib.PDFWorker .workerSrc = './node_modules/pdfjs-dist/build/pdf.worker.entry.js';
-
+import { getDocument } from 'pdfjs-dist';
+import "pdfjs-dist/build/pdf.worker.entry";
 
 const readFileData = (file) => {
   return new Promise((resolve, reject) => {
@@ -19,11 +18,12 @@ const readFileData = (file) => {
   });
 };
 
-//return: images -> an array of images encoded in base64
 const convertPdfToImages = async (file) => {
+  console.log('1', file);
   const images = [];
   const data = await readFileData(file);
-  const pdf = await pdflib.getDocument(data).promise;
+  console.log('2', data);
+  const pdf = await getDocument(data).promise;
   const canvas = document.createElement("canvas");
   for (let i = 0; i < pdf.numPages; i++) {
     const page = await pdf.getPage(i + 1);
@@ -32,9 +32,10 @@ const convertPdfToImages = async (file) => {
     canvas.height = viewport.height;
     canvas.width = viewport.width;
     await page.render({ canvasContext: context, viewport: viewport }).promise;
-    images.append(canvas.toDataURL());
+    images.push(canvas.toDataURL());
   }
   canvas.remove();
+  console.log(images);
   return images;
 }
 
@@ -100,54 +101,109 @@ const UploadModal = (props) => {
   }, [file]);
 
   useEffect(() => {
+    if (!file) {
+      setPreview(undefined);
+      return;
+    }
+
+    const objectUrl = URL.createObjectURL(file);
+    setPreview(objectUrl);
+
+    // free memory when ever this component is unmounted
+    return () => URL.revokeObjectURL(objectUrl);
+  }, [file]);
+
+  useEffect(() => {
     if (!cid) {
       return;
     }
 
     const processFileAndUpload = async () => {
-      try {
-        const base64Data = await fileToBase64(file);
 
-        const documentInfo = {
-          nft_id: cid,
-          user_id: props.user.address,
-          name: file.name,
-          format: file.type.split("/")[1].toUpperCase(),
-          image: base64Data,
-          status: "Uploaded",
-          category: category,
-          created_at: new Date(),
-        };
+      console.log('file', file);
 
-        if (file.type === 'application/pdf') {
+      // if (file.type === 'application/pdf') {
+      //
+      //   const pdfImagesArray = convertPdfToImages(file)
+      //   // if (pdfImagesArray.length > 0) {
+      //   // documentInfo.image = await fileToBase64(pdfImagesArray[0]);
+      //   file.image = pdfImagesArray[0];
+      //   console.log('image for page 1', pdfImagesArray[0]);
+      //   // }
+      // }
 
-          const pdfImagesArray = convertPdfToImages(file)
-          if (pdfImagesArray.length > 0) {
-            documentInfo.image = await fileToBase64(pdfImagesArray[0]);
+      if (file.type !== 'application/pdf') {
+        try {
+          const base64Data = await fileToBase64(file);
+
+          console.log('base64Data', base64Data);
+
+          const documentInfo = {
+            nft_id: cid,
+            user_id: props.user.address,
+            name: file.name,
+            format: file.type.split("/")[1].toUpperCase(),
+            image: base64Data,
+            status: "Uploaded",
+            category: category,
+            created_at: new Date(),
+          };
+          const response = await backendRequests.addNft(documentInfo);
+
+          if (response.success) {
+            toast.success(response.message);
+            props.setUploadSuccess(true);
+            props.cancelHandler();
+          } else {
+            toast.error(response.message);
+            props.setUploadSuccess(false);
           }
+        } catch (error) {
+          console.error("An error occurred:", error);
+          toast.error("An unexpected error occurred.");
+        } finally {
+          setIsLoading(false);
         }
+      } else {
+        try {
+          const pdfImages = await convertPdfToImages(file);
 
-        const response = await backendRequests.addNft(documentInfo);
+          console.log('pdfImages[0]', pdfImages[0]);
 
-        if (response.success) {
-          toast.success(response.message);
-          props.setUploadSuccess(true);
-          props.cancelHandler();
-        } else {
-          toast.error(response.message);
-          props.setUploadSuccess(false);
+          const documentInfo = {
+            nft_id: cid,
+            user_id: props.user.address,
+            name: file.name,
+            format: file.type.split("/")[1].toUpperCase(),
+            image: pdfImages[0].split(',')[1],
+            status: "Uploaded",
+            category: category,
+            created_at: new Date(),
+          };
+          const response = await backendRequests.addNft(documentInfo);
+
+          if (response.success) {
+            toast.success(response.message);
+            props.setUploadSuccess(true);
+            props.cancelHandler();
+          } else {
+            toast.error(response.message);
+            props.setUploadSuccess(false);
+          }
+        } catch (error) {
+          console.error("An error occurred:", error);
+          toast.error("An unexpected error occurred.");
+        } finally {
+          setIsLoading(false);
         }
-      } catch (error) {
-        console.error("An error occurred:", error);
-        toast.error("An unexpected error occurred.");
-      } finally {
-        setIsLoading(false);
       }
     };
 
     processFileAndUpload();
 
   }, [cid]);
+
+
 
   return (
       <div className="modal-background">
