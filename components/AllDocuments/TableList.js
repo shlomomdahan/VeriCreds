@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import {setNftAttributes} from "@/features/nft/nftSlice";
 import Link from "next/link";
 import * as backendRequests from "../../pages/api/backendRequests";
+import {formatFilename} from "@/util/formatFilename";
 
 const TableList = (props) => {
     const dispatch = useDispatch();
@@ -128,9 +129,9 @@ const TableList = (props) => {
                                 <label htmlFor="checkbox-table-search-1" className="sr-only">checkbox</label>
                             </div>
                         </td>
-                        <th scope="row" className="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
-                            <img className="w-24 h-20 rounded-lg" src={document.image}
-                                 width="100%"
+                        <th scope="row" className="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white max-w-md">
+                            <img className="w-28 rounded-lg object-cover" src={document.image}
+                                 height={"100%"}
                                  alt="" />
                             <div className="pl-3">
                                 <Link
@@ -147,7 +148,7 @@ const TableList = (props) => {
                                         )
                                     }
                                 >
-                                    <div className="text-base font-semibold hover:underline">{document.name}</div>
+                                    <div className="text-base font-semibold hover:underline">{formatFilename(document.name)}</div>
                                 </Link>
                                 {/*<div className="font-normal text-gray-500">{document.format}</div>*/}
                             </div>

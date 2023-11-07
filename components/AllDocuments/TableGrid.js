@@ -121,7 +121,7 @@ const TableGrid = (props) => {
                                     className={`absolute inset-0 flex items-center justify-center ${isAnyCardFlipped ? "brightness-transition" : ""}`}
                                 >
                                     <img
-                                        className="object-cover w-full h-full rounded-lg filter-brightness"
+                                        className="object-cover w-full h-full rounded-lg filter-brightness shadow-2xl"
                                         src={document.image}
                                         alt=""
                                     />
