@@ -1,5 +1,7 @@
 # Vericreds Combined Repo
 
+Devpost page and video demo: [https://devpost.com/software/vericreds](https://devpost.com/software/vericreds)
+
 ## Overview
 `Vericreds` is a Web3 Proof of Concept (PoC) application developed during a hackathon, designed for cloud-based document sharing. It represents an integration of frontend and backend technologies in a single repository, highlighting a full-stack development approach with a focus on blockchain and modern web solutions.
 
