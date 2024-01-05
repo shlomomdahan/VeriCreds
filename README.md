@@ -13,10 +13,6 @@ The frontend is built with React and Next.js, leveraging a range of libraries fo
 - **Axios & React Dropzone**: HTTP requests and file uploading.
 - **React Google ReCAPTCHA**: Enhancing security.
 
-### Development Dependencies
-- **ESLint**: Code linting.
-- **Tailwind CSS, PostCSS, Autoprefixer**: CSS processing.
-
 ## Backend Technologies and Libraries
 The backend is developed using Python with the following key libraries:
 - **FastAPI & Flask**: Powerful web frameworks for building APIs.
