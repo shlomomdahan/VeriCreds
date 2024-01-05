@@ -1,4 +1,4 @@
-# Vericreds Combined Repo
+# VeriCreds
 
 Devpost page and video demo: [https://devpost.com/software/vericreds](https://devpost.com/software/vericreds)
 
