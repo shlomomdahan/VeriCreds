@@ -23,6 +23,3 @@ The backend is developed using Python with the following key libraries:
 - **PyJWT**: Handling JSON Web Tokens for secure authentication.
 - **PyMongo**: MongoDB driver for Python.
 - **Python-Dotenv**: Loading environment variables from `.env` files.
-
-## Purpose
-Developed as a hackathon project, `Vericreds` demonstrates rapid and innovative full-stack development, integrating blockchain technology with a dynamic web frontend and robust backend services, tailored for cloud-based document sharing.
